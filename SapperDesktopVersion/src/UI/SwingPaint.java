@@ -3,7 +3,7 @@ package UI;
 import UI.UIElements.GameTimer;
 import UI.UIElements.ImagesGetter;
 import UI.UIElements.LeaderBoard;
-import UI.UIElements.LevelDifficulty;
+import UI.UIElements.DifficultyLevel;
 import UI.menu.GameMenu;
 import UI.panels.*;
 import game.ActionField;
@@ -20,22 +20,22 @@ public class SwingPaint {
     public static final int TOP_PADDING = 160;
     public static final int BOTTOM_PADDING = 20;
     private static PanelTop panelTop;
-    private static LevelDifficulty levelDifficulty;
+    private static DifficultyLevel difficultyLevel;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SwingPaint::createAndShowGUI);
     }
 
-    public static LevelDifficulty getCurrentLevel() { return levelDifficulty; }
+    public static DifficultyLevel getCurrentLevel() { return difficultyLevel; }
 
     private static void setFrameSize(final int row, final int column) {
         f.setSize(row * FieldPainter.CELL_WIDTH + RIGHT_LEFT_PADDING,
                 column * FieldPainter.CELL_HEIGHT + TOP_PADDING + BOTTOM_PADDING);
     }
 
-    private static void createPanels(LevelDifficulty curLevel, LeaderBoard leaderBoard) {
+    private static void createPanels(DifficultyLevel curLevel, LeaderBoard leaderBoard) {
         setFrameSize(9, 9);
-        levelDifficulty = curLevel;
+        difficultyLevel = curLevel;
         ActionField actionField = new game.ActionField(9, 9, 10);
         GameTimer gameTimer = new GameTimer();
         PanelTopListener topListener = new PanelTopListener();
@@ -46,7 +46,7 @@ public class SwingPaint {
         f.add(gamePanel, BorderLayout.CENTER);
     }
 
-    private static ActionField chooseActionField(LevelDifficulty curLevel) {
+    private static ActionField chooseActionField(DifficultyLevel curLevel) {
         switch (curLevel) {
             case BEGINNER:
                 return new ActionField(5, 5, 5);
@@ -59,13 +59,13 @@ public class SwingPaint {
             case INTENSE:
                 return new ActionField(40, 17, 200);
             default:
-                return chooseActionField(levelDifficulty);
+                return chooseActionField(difficultyLevel);
         }
     }
 
-    public static void recreatePanels(LevelDifficulty newLevel) {
+    public static void recreatePanels(DifficultyLevel newLevel) {
         ActionField actionField = chooseActionField(newLevel);
-        levelDifficulty = newLevel;
+        difficultyLevel = newLevel;
         panelTop.recreatePanel(actionField);
         setFrameSize(actionField.getRow(), actionField.getColumn());
     }
@@ -81,7 +81,7 @@ public class SwingPaint {
         f.validate();
         f.setLayout(new BorderLayout());
         f.setResizable( false );
-        createPanels(LevelDifficulty.EASY, leaderBoard);
+        createPanels(DifficultyLevel.EASY, leaderBoard);
         f.setIconImage(ImagesGetter.GAME_ICON);
         f.setVisible(true);
     }

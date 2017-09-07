@@ -2,7 +2,7 @@ package UI.menu;
 
 import UI.UIElements.ILeaderBoardListener;
 import UI.UIElements.LeaderBoard;
-import UI.UIElements.LevelDifficulty;
+import UI.UIElements.DifficultyLevel;
 
 import javax.swing.*;
 
@@ -45,8 +45,8 @@ public class ScoresMenu extends JMenu implements ILeaderBoardListener {
     }
 
     @Override
-    public void scoreChanged(String newScore, LevelDifficulty levelDifficulty) {
-        switch (levelDifficulty) {
+    public void scoreChanged(String newScore, DifficultyLevel difficultyLevel) {
+        switch (difficultyLevel) {
             case BEGINNER:
                 beginner.setText(getMenuItemName("Beginner", newScore));
                 break;

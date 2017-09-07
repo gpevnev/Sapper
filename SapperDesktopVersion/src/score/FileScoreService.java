@@ -1,6 +1,6 @@
 package score;
 
-import UI.UIElements.LevelDifficulty;
+import UI.UIElements.DifficultyLevel;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -33,8 +33,8 @@ public class FileScoreService extends SimpleScoreService {
     }
 
     @Override
-    public void addScore(long score, LevelDifficulty levelDifficulty) {
-        super.addScore(score, levelDifficulty);
+    public void addScore(long score, DifficultyLevel difficultyLevel) {
+        super.addScore(score, difficultyLevel);
         if (!file.exists()) {
             new File(file.toString().substring(0, file.toString().lastIndexOf('/'))).mkdirs();
         }
@@ -46,16 +46,16 @@ public class FileScoreService extends SimpleScoreService {
     }
 
     @JsonAdapter(ScoreMapDeserializer.class)
-    class ScoreMapToken extends TypeToken<Map<LevelDifficulty, TreeSet<Long>>> {
+    class ScoreMapToken extends TypeToken<Map<DifficultyLevel, TreeSet<Long>>> {
     }
 
-    public class ScoreMapDeserializer implements JsonDeserializer<Map<LevelDifficulty, TreeSet<Long>>> {
+    public class ScoreMapDeserializer implements JsonDeserializer<Map<DifficultyLevel, TreeSet<Long>>> {
         @Override
-        public Map<LevelDifficulty, TreeSet<Long>> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Map<LevelDifficulty, TreeSet<Long>> result = new HashMap<>(results);
+        public Map<DifficultyLevel, TreeSet<Long>> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            Map<DifficultyLevel, TreeSet<Long>> result = new HashMap<>(results);
 
             JsonObject jsonObject = json.getAsJsonObject();
-            for (LevelDifficulty difficulty : LevelDifficulty.values()) {
+            for (DifficultyLevel difficulty : DifficultyLevel.values()) {
                 for (JsonElement score : jsonObject.get(difficulty.name()).getAsJsonArray()) {
                     results.get(difficulty).add(score.getAsLong());
                 }
@@ -66,6 +66,6 @@ public class FileScoreService extends SimpleScoreService {
 
     public static void main(String[] args) {
         ScoreService a = new FileScoreService("lol/kek/test.txt");
-        a.addScore(1, LevelDifficulty.EASY);
+        a.addScore(1, DifficultyLevel.EASY);
     }
 }

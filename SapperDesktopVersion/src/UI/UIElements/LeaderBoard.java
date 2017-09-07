@@ -19,7 +19,7 @@ public class LeaderBoard implements IScorePanelListener {
 
     public LeaderBoard() {
         this.listeners = new ArrayList<>();
-        this.scoreService = new FileScoreService("resources/scores/scores.txt");
+        this.scoreService = new FileScoreService("resources/scores/scores.json");
     }
 
     public void addListener(ILeaderBoardListener listener) {
@@ -27,37 +27,37 @@ public class LeaderBoard implements IScorePanelListener {
     }
 
     @Override
-    public void newScore(long score, LevelDifficulty levelDifficulty) {
-        long previousHightScore = scoreService.getBestScore(levelDifficulty);
-        scoreService.addScore(score, levelDifficulty);
+    public void newScore(long score, DifficultyLevel difficultyLevel) {
+        long previousHightScore = scoreService.getBestScore(difficultyLevel);
+        scoreService.addScore(score, difficultyLevel);
         if (previousHightScore != score) {
-            sayScoreChanged(score, levelDifficulty);
+            sayScoreChanged(score, difficultyLevel);
         }
     }
 
 
     public String getBeginnerLevelResult() {
-        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.BEGINNER));
+        return TimeFormat.getTimeText(scoreService.getBestScore(DifficultyLevel.BEGINNER));
     }
 
     public String getEasyLevelResult() {
-        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.EASY));
+        return TimeFormat.getTimeText(scoreService.getBestScore(DifficultyLevel.EASY));
     }
 
     public String getNormalLevelResult() {
-        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.NORMAL));
+        return TimeFormat.getTimeText(scoreService.getBestScore(DifficultyLevel.NORMAL));
     }
 
     public String getHardLevelResult() {
-        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.HARD));
+        return TimeFormat.getTimeText(scoreService.getBestScore(DifficultyLevel.HARD));
     }
     public String getIntenseLevelResult() {
-        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.INTENSE));
+        return TimeFormat.getTimeText(scoreService.getBestScore(DifficultyLevel.INTENSE));
     }
 
-    private void sayScoreChanged(long score, LevelDifficulty levelDifficulty) {
+    private void sayScoreChanged(long score, DifficultyLevel difficultyLevel) {
         for (ILeaderBoardListener listener: listeners) {
-            listener.scoreChanged(TimeFormat.getTimeText(score), levelDifficulty);
+            listener.scoreChanged(TimeFormat.getTimeText(score), difficultyLevel);
         }
     }
 }

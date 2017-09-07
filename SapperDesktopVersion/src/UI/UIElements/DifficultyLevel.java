@@ -3,7 +3,7 @@ package UI.UIElements;
 /**
  * Created by @author Telnov Sergey on 02.09.2017.
  */
-public enum LevelDifficulty {
+public enum DifficultyLevel {
     BEGINNER,
     EASY,
     NORMAL,

@@ -1,13 +1,13 @@
 package score;
 
-import UI.UIElements.LevelDifficulty;
+import UI.UIElements.DifficultyLevel;
 
 import java.util.TreeSet;
 
 public interface ScoreService {
-    void addScore(long score, LevelDifficulty levelDifficulty);
+    void addScore(long score, DifficultyLevel difficultyLevel);
 
-    TreeSet<Long> getScore(LevelDifficulty levelDifficulty);
+    TreeSet<Long> getScore(DifficultyLevel difficultyLevel);
 
-    long getBestScore(LevelDifficulty levelDifficulty);
+    long getBestScore(DifficultyLevel difficultyLevel);
 }

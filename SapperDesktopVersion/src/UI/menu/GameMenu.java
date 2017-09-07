@@ -2,7 +2,7 @@ package UI.menu;
 
 import UI.SwingPaint;
 import UI.UIElements.LeaderBoard;
-import UI.UIElements.LevelDifficulty;
+import UI.UIElements.DifficultyLevel;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -79,17 +79,17 @@ public class GameMenu implements MenuListener, ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source.equals(beginner)) {
-            SwingPaint.recreatePanels(LevelDifficulty.BEGINNER);
+            SwingPaint.recreatePanels(DifficultyLevel.BEGINNER);
         } else if (source.equals(easy)) {
-            SwingPaint.recreatePanels(LevelDifficulty.EASY);
+            SwingPaint.recreatePanels(DifficultyLevel.EASY);
         } else if (source.equals(normal)) {
-            SwingPaint.recreatePanels(LevelDifficulty.NORMAL);
+            SwingPaint.recreatePanels(DifficultyLevel.NORMAL);
         } else if (source.equals(hard)) {
-            SwingPaint.recreatePanels(LevelDifficulty.HARD);
+            SwingPaint.recreatePanels(DifficultyLevel.HARD);
         } else if (source.equals(intense)) {
-            SwingPaint.recreatePanels(LevelDifficulty.INTENSE);
+            SwingPaint.recreatePanels(DifficultyLevel.INTENSE);
         } else if (source.equals(startNewGame)) {
-            SwingPaint.recreatePanels(LevelDifficulty.NO_LEVEL);
+            SwingPaint.recreatePanels(DifficultyLevel.NO_LEVEL);
         } else if (source.equals(exitButton)) {
             System.exit(0);
         }
