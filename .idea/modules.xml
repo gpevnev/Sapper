@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/GameSapper/GameSapper.iml" filepath="$PROJECT_DIR$/GameSapper/GameSapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SapperAndroidApp.iml" filepath="$PROJECT_DIR$/.idea/modules/SapperAndroidApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SapperDesktopVersion.iml" filepath="$PROJECT_DIR$/.idea/modules/SapperDesktopVersion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SapperDesktopVersion_main.iml" filepath="$PROJECT_DIR$/.idea/modules/SapperDesktopVersion_main.iml" group="SapperDesktopVersion" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SapperDesktopVersion_test.iml" filepath="$PROJECT_DIR$/.idea/modules/SapperDesktopVersion_test.iml" group="SapperDesktopVersion" />
+    </modules>
+  </component>
+</project>

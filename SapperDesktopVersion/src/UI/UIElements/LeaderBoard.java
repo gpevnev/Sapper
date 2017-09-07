@@ -1,6 +1,8 @@
 package UI.UIElements;
 
 import UI.panels.IScorePanelListener;
+import score.FileScoreService;
+import score.ScoreService;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,39 +14,12 @@ import java.util.Scanner;
  */
 
 public class LeaderBoard implements IScorePanelListener {
-
-    private ArrayList<ILeaderBoardListener> listeners = new ArrayList<>();
-    private long beginnerLevelScore;
-    private long easyLevelScore;
-    private long normalLevelScore;
-    private long hardLevelScore;
-    private long intenseLevelScore;
+    private ArrayList<ILeaderBoardListener> listeners;
+    private ScoreService scoreService;
 
     public LeaderBoard() {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream inputScoresStream = classloader.getResourceAsStream("scores.txt");
-        try {
-            Scanner input = new Scanner(inputScoresStream);
-            beginnerLevelScore = getScore(input.nextLong());
-            easyLevelScore = getScore(input.nextLong());
-            normalLevelScore = getScore(input.nextLong());
-            hardLevelScore = getScore(input.nextLong());
-            intenseLevelScore = getScore(input.nextLong());
-        } catch (NoSuchElementException e) {
-            beginnerLevelScore = Long.MAX_VALUE;
-            easyLevelScore = Long.MAX_VALUE;
-            normalLevelScore = Long.MAX_VALUE;
-            hardLevelScore = Long.MAX_VALUE;
-            intenseLevelScore = Long.MAX_VALUE;
-        }
-        printScore();
-    }
-
-    private long getScore(long score) {
-        if (score == -1) {
-            return Long.MAX_VALUE;
-        }
-        return score;
+        this.listeners = new ArrayList<>();
+        this.scoreService = new FileScoreService("resources/scores/scores.txt");
     }
 
     public void addListener(ILeaderBoardListener listener) {
@@ -53,92 +28,31 @@ public class LeaderBoard implements IScorePanelListener {
 
     @Override
     public void newScore(long score, LevelDifficulty levelDifficulty) {
-        boolean scoreChanged = false;
-        switch (levelDifficulty) {
-            case BEGINNER:
-                if (beginnerLevelScore > score) {
-                    beginnerLevelScore = score;
-                    scoreChanged = true;
-                }
-                break;
-            case EASY:
-                if (easyLevelScore > score) {
-                    easyLevelScore = score;
-                    scoreChanged = true;
-                }
-                break;
-            case NORMAL:
-                if (normalLevelScore > score) {
-                    normalLevelScore = score;
-                    scoreChanged = true;
-                }
-                break;
-            case HARD:
-                if (hardLevelScore > score) {
-                    hardLevelScore = score;
-                    scoreChanged = true;
-                }
-                break;
-            case INTENSE:
-                if (intenseLevelScore > score) {
-                    intenseLevelScore = score;
-                    scoreChanged = true;
-                }
-                break;
-        }
-        if (scoreChanged) {
-            printScore();
+        long previousHightScore = scoreService.getBestScore(levelDifficulty);
+        scoreService.addScore(score, levelDifficulty);
+        if (previousHightScore != score) {
             sayScoreChanged(score, levelDifficulty);
         }
     }
 
-    private void printScore() {
-
-//        try (OutputStream outputStream = new FileOutputStream("scores.txt")) {
-//            PrintWriter pw = new PrintWriter(outputStream);
-//            pw.println(beginnerLevelScore);
-//            pw.println(easyLevelScore);
-//            pw.println(normalLevelScore);
-//            pw.println(hardLevelScore);
-//            pw.println(intenseLevelScore);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        FileOutputStream outputStream = null;
-//        try {
-//            outputStream = new FileOutputStream("scores.txt");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try (PrintWriter pw = new PrintWriter(outputStream)) {
-//            pw.println(beginnerLevelScore);
-//            pw.println(easyLevelScore);
-//            pw.println(normalLevelScore);
-//            pw.println(hardLevelScore);
-//            pw.println(intenseLevelScore);
-//        } catch (NullPointerException e) {
-//
-//        }
-    }
 
     public String getBeginnerLevelResult() {
-        return TimeFormat.getTimeText(beginnerLevelScore);
+        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.BEGINNER));
     }
 
     public String getEasyLevelResult() {
-        return TimeFormat.getTimeText(easyLevelScore);
+        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.EASY));
     }
 
     public String getNormalLevelResult() {
-        return TimeFormat.getTimeText(normalLevelScore);
+        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.NORMAL));
     }
 
     public String getHardLevelResult() {
-        return TimeFormat.getTimeText(hardLevelScore);
+        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.HARD));
     }
     public String getIntenseLevelResult() {
-        return TimeFormat.getTimeText(intenseLevelScore);
+        return TimeFormat.getTimeText(scoreService.getBestScore(LevelDifficulty.INTENSE));
     }
 
     private void sayScoreChanged(long score, LevelDifficulty levelDifficulty) {

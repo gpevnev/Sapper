@@ -1,12 +1,12 @@
 package UI.UIElements;
 
 import UI.panels.FieldPainter;
-import game.Cell;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -42,9 +42,9 @@ public class ImagesGetter {
         public BufferedImage flag, bomb, fakeBomb, explosion, gameIcon;
         public ImageIcon smileIcon, sadIcon, flagIcon, flagTaggedIcon, boredIcon;
 
-        private BufferedImage loadImage(String address) throws IOException {
+        private BufferedImage loadImage(String imageName) throws IOException {
             try {
-                return ImageIO.read(Image.class.getResource("/" + address));
+                return ImageIO.read(new File("resources/" + imageName));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
